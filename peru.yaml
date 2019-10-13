@@ -13,21 +13,31 @@ imports:
 
 git module libcommuni:
     url: https://github.com/hemirt/libcommuni
+    rev: a31ffb037eadac65dba73ad2b2da6dafe31e3bf7
 git module humanize:
     url: https://github.com/pajlada/humanize
+    rev: 4e00a03623966723f23ca3034c1ad944009cd7be
 git module qbreakpad:
     url:  https://github.com/jiakuan/qBreakpad
+    rev: a4626c12e9ae6f02fc1ca7a4e399bd8307424103
 git module wintoast:
     url: https://github.com/mohabouje/WinToast
+    rev: ce441336ef057576dfb377be754bc5357a04ff85
 git module settings:
     url: https://github.com/pajlada/settings
+    rev: a5040463c01e6b0e562eab82e0decb29cab9b450
 git module signals:
     url: https://github.com/pajlada/signals
+    rev: 1c38746b05d9311e73c8c8acdfdc4d36c9c551be
 git module serialize:
     url: https://github.com/pajlada/serialize
+    rev: 130ffc3ec722284ca454a1e70c5478a75f380144
 git module rapidjson:
     url: https://github.com/Tencent/rapidjson
+    rev: d87b698d0fcc10a5f632ecbc80a9cb2a8fa094a5
 git module qtkeychain:
     url: https://github.com/Chatterino/qtkeychain
+    rev: 832f550da3f6655168a737d2e1b7df37272e936d
 git module websocketpp:
     url: https://github.com/ziocleto/websocketpp
+    rev: 1e0138c7ccedc6be859d28270ccd6195f235a94e
