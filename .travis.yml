@@ -22,6 +22,8 @@ matrix:
 
       install:
         - sh ./.CI/InstallQTStylePlugins.sh
+        - pip install peru
+        - peru sync
 
       script:
         - dateOfBuild="CHATTERINO_NIGHTLY_VERSION_STRING=\"\\\"$(date +%d.%m.%Y)\\\"\""
@@ -61,6 +63,10 @@ matrix:
           - p7zip
           - create-dmg
 
+      install:
+        - pip install peru
+        - peru sync
+        
       script:
         - mkdir build && cd build
         - dateOfBuild="CHATTERINO_NIGHTLY_VERSION_STRING=\"\\\"$(date +%d.%m.%Y)\\\"\""

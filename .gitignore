@@ -75,3 +75,18 @@ Thumbs.db
 
 #I HATE MAC
 .DS_Store
+
+# peru garbage
+.peru/*
+
+# managed by peru
+lib/libcommuni
+lib/humanize
+lib/qBreakpad
+lib/WinToast
+lib/settings
+lib/signals
+lib/serialize
+lib/rapidjson
+lib/qtkeychain
+lib/websocketpp

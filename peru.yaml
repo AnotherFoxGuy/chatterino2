@@ -1,0 +1,33 @@
+imports:
+    libcommuni: lib/libcommuni
+    humanize: lib/humanize
+    qbreakpad: lib/qBreakpad
+    wintoast: lib/WinToast
+    settings: lib/settings
+    signals: lib/signals
+    serialize: lib/serialize
+    rapidjson: lib/rapidjson
+    qtkeychain: lib/qtkeychain
+    websocketpp: lib/websocketpp
+
+
+git module libcommuni:
+    url: https://github.com/hemirt/libcommuni
+git module humanize:
+    url: https://github.com/pajlada/humanize
+git module qbreakpad:
+    url:  https://github.com/jiakuan/qBreakpad
+git module wintoast:
+    url: https://github.com/mohabouje/WinToast
+git module settings:
+    url: https://github.com/pajlada/settings
+git module signals:
+    url: https://github.com/pajlada/signals
+git module serialize:
+    url: https://github.com/pajlada/serialize
+git module rapidjson:
+    url: https://github.com/Tencent/rapidjson
+git module qtkeychain:
+    url: https://github.com/Chatterino/qtkeychain
+git module websocketpp:
+    url: https://github.com/ziocleto/websocketpp
