@@ -11,6 +11,8 @@ matrix:
           sources:
           - sourceline: 'ppa:beineri/opt-qt-5.12.3-bionic'
           packages:
+          - python3-setuptools
+          - python3-pip
           - qt512-meta-minimal
           - qt512multimedia
           - qt512svg
@@ -21,9 +23,9 @@ matrix:
           - libgtk2.0-dev
 
       install:
-        - sh ./.CI/InstallQTStylePlugins.sh
-        - pip install peru
+        - pip3 install peru
         - peru sync
+        - sh ./.CI/InstallQTStylePlugins.sh
 
       script:
         - dateOfBuild="CHATTERINO_NIGHTLY_VERSION_STRING=\"\\\"$(date +%d.%m.%Y)\\\"\""
@@ -64,7 +66,7 @@ matrix:
           - create-dmg
 
       install:
-        - pip install peru
+        - pip3 install peru
         - peru sync
         
       script:
