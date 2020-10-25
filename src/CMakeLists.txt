@@ -1,0 +1,14 @@
+project(chatterino)
+
+file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS LIST_DIRECTORIES false "*.hpp")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS LIST_DIRECTORIES false "*.cpp")
+file(GLOB_RECURSE FORMS CONFIGURE_DEPENDS LIST_DIRECTORIES false "*.ui")
+file(GLOB_RECURSE RESOURCES CONFIGURE_DEPENDS LIST_DIRECTORIES false "*.qrc")
+
+add_executable(${PROJECT_NAME}
+        ${FORMS}
+        ${HEADERS}
+        ${SOURCES}
+        ${RESOURCES})
+
+target_link_libraries(${PROJECT_NAME} Qt5::Widgets)

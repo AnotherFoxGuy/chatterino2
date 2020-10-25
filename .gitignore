@@ -78,3 +78,5 @@ Thumbs.db
 
 # Other editors/IDEs
 .vscode
+
+.idea/
