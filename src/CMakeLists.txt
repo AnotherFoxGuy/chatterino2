@@ -20,7 +20,7 @@ set(CMAKE_AUTOUIC ON)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
-add_dependencies(${PROJECT_NAME} Qtkeychain Websocketpp)
+add_dependencies(${PROJECT_NAME} Websocketpp)
 
 target_link_libraries(${PROJECT_NAME}
         Communi_Core
@@ -38,7 +38,7 @@ target_link_libraries(${PROJECT_NAME}
         Qt5::Multimedia
         Qt5::Svg
         Qt5::Concurrent
-        Qtkeychain::Qtkeychain
+        #qt5keychain
         Humanize::Humanize
         Rapidjson::Rapidjson
         Serialize::Serialize
