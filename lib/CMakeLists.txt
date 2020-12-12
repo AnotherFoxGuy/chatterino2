@@ -72,10 +72,15 @@ if (BUILD_LIBCOMMUNI)
             GIT_SHALLOW TRUE
             GIT_PROGRESS TRUE
             BUILD_IN_SOURCE 1
-            #            DOWNLOAD_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/libcommuni ${CMAKE_BINARY_DIR}/Source/LibCommuni
+            # DOWNLOAD_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/libcommuni ${CMAKE_BINARY_DIR}/Source/LibCommuni
             #SOURCE_DIR "${CMAKE_SOURCE_DIR}/libcommuni"
-            #             -set prefix ${DEPENDENCIES_OUTPUT_DIR} CONFIG+=${UBUILD_TYPE}
-            CONFIGURE_COMMAND qmake CONFIG+=${UBUILD_TYPE} PREFIX=${DEPENDENCIES_OUTPUT_DIR}
+            #-set prefix ${DEPENDENCIES_OUTPUT_DIR} CONFIG+=${UBUILD_TYPE}
+            CONFIGURE_COMMAND qmake
+                CONFIG+=${UBUILD_TYPE}
+                IRC_INSTALL_BINS=${DEPENDENCIES_OUTPUT_DIR}/bin
+                IRC_INSTALL_HEADERS=${DEPENDENCIES_OUTPUT_DIR}/include
+                IRC_INSTALL_LIBS=${DEPENDENCIES_OUTPUT_DIR}/lib
+                IRC_INSTALL_FEATURES=${DEPENDENCIES_OUTPUT_DIR}/features
             BUILD_COMMAND jom
             INSTALL_COMMAND jom install
     )

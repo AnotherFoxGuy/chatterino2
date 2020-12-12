@@ -10,7 +10,7 @@ find_package(Serialize REQUIRED)
 find_package(Settings REQUIRED)
 find_package(Signals REQUIRED)
 find_package(Websocketpp REQUIRED)
-find_package(WinToast REQUIRED)
+#find_package(WinToast REQUIRED)
 
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS LIST_DIRECTORIES false "*.hpp" "*.cpp" "*.ui" "*.qrc")
 
