@@ -15,7 +15,7 @@ project(chatterino2-dependencies VERSION 1)
 
 # Options with same default value on all platforms
 option(BUILD_HUMANIZE "Build Humanize IRC framework" ON)
-option(BUILD_LIBCOMMUNI "Build LibCommuni IRC framework" ON)
+option(BUILD_LIBCOMMUNI "Build LibCommuni IRC framework" OFF)
 option(BUILD_QTKEYCHAIN "Build QtKeychain" ON)
 option(BUILD_RAPIDJSON "Build RapidJSON library" ON)
 option(BUILD_SERIALIZE "Build Serialize library" ON)
@@ -85,8 +85,11 @@ if (BUILD_LIBCOMMUNI)
     ExternalProject_Add(
             LibCommuni
             BUILD_IN_SOURCE 1
-            DOWNLOAD_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/libcommuni ${CMAKE_BINARY_DIR}/Source/LibCommuni
-            UPDATE_COMMAND ""
+            #DOWNLOAD_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/libcommuni ${CMAKE_BINARY_DIR}/Source/LibCommuni
+            #UPDATE_COMMAND ""
+            GIT_REPOSITORY https://github.com/communi/libcommuni.git
+            GIT_SHALLOW TRUE
+            GIT_PROGRESS TRUE
             PATCH_COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/libcommuni-patch.pro ${CMAKE_BINARY_DIR}/Source/LibCommuni/libcommuni.pro
             #SOURCE_DIR "${CMAKE_SOURCE_DIR}/libcommuni"
             CONFIGURE_COMMAND qmake
