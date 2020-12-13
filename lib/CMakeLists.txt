@@ -14,10 +14,12 @@ project(chatterino2-dependencies VERSION 1)
 # ------------------------------------------------------------------------------------------------#
 
 # Options with same default value on all platforms
+option(BUILD_HUMANIZE "Build Humanize IRC framework" ON)
 option(BUILD_LIBCOMMUNI "Build LibCommuni IRC framework" ON)
 option(BUILD_QTKEYCHAIN "Build QtKeychain" ON)
 option(BUILD_RAPIDJSON "Build RapidJSON library" ON)
 option(BUILD_SERIALIZE "Build Serialize library" ON)
+option(BUILD_SIGNALS "Build Signals library" ON)
 option(BUILD_WEBSOCKETPP "Build WebSocketpp library" ON)
 
 # ------------------------------------------------------------------------------------------------#
@@ -59,13 +61,28 @@ if (UNIX)
     set(ENV{PKG_CONFIG_PATH} "$ENV{PKG_CONFIG_PATH}:${DEPENDENCIES_LIB_DIR}/pkgconfig")
 endif ()
 
+# ------------------------------------------------------------------------------------------------#
+#  Humanize
+# ------------------------------------------------------------------------------------------------#
+
+if (BUILD_HUMANIZE)
+    ExternalProject_Add(
+            Humanize
+            DOWNLOAD_COMMAND ""
+            SOURCE_DIR "${CMAKE_SOURCE_DIR}/humanize"
+            CONFIGURE_COMMAND ""
+            BUILD_COMMAND ""
+            INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/humanize/include/humanize ${DEPENDENCIES_OUTPUT_DIR}/include/humanize
+    )
+endif ()
+
 
 # ------------------------------------------------------------------------------------------------#
 #  LibCommuni
 # ------------------------------------------------------------------------------------------------#
 
 if (BUILD_LIBCOMMUNI)
-    string(TOUPPER ${CMAKE_BUILD_TYPE} UBUILD_TYPE)
+    #string(TOUPPER ${CMAKE_BUILD_TYPE} UBUILD_TYPE)
     ExternalProject_Add(
             LibCommuni
             GIT_REPOSITORY https://github.com/communi/libcommuni.git
@@ -76,13 +93,14 @@ if (BUILD_LIBCOMMUNI)
             #SOURCE_DIR "${CMAKE_SOURCE_DIR}/libcommuni"
             #-set prefix ${DEPENDENCIES_OUTPUT_DIR} CONFIG+=${UBUILD_TYPE}
             CONFIGURE_COMMAND qmake
-                CONFIG+=${UBUILD_TYPE}
-                IRC_INSTALL_BINS=${DEPENDENCIES_OUTPUT_DIR}/bin
-                IRC_INSTALL_HEADERS=${DEPENDENCIES_OUTPUT_DIR}/include
-                IRC_INSTALL_LIBS=${DEPENDENCIES_OUTPUT_DIR}/lib
-                IRC_INSTALL_FEATURES=${DEPENDENCIES_OUTPUT_DIR}/features
-            BUILD_COMMAND jom
-            INSTALL_COMMAND jom install
+            CONFIG+=$<UPPER_CASE:$<CONFIG>>
+            DEFINES+=IRC_NAMESPACE=Communi
+            IRC_INSTALL_BINS=${DEPENDENCIES_OUTPUT_DIR}/bin
+            IRC_INSTALL_HEADERS=${DEPENDENCIES_OUTPUT_DIR}/include
+            IRC_INSTALL_LIBS=${DEPENDENCIES_OUTPUT_DIR}/lib
+            IRC_INSTALL_FEATURES=${DEPENDENCIES_OUTPUT_DIR}/features
+            BUILD_COMMAND $<IF:$<BOOL:WIN32>,nmake,make>
+            INSTALL_COMMAND $<IF:$<BOOL:WIN32>,nmake,make> install
     )
 endif ()
 
@@ -138,6 +156,21 @@ if (BUILD_SERIALIZE)
             CONFIGURE_COMMAND ""
             BUILD_COMMAND ""
             INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/serialize/include ${DEPENDENCIES_OUTPUT_DIR}/include
+    )
+endif ()
+
+# ------------------------------------------------------------------------------------------------#
+#  Signals
+# ------------------------------------------------------------------------------------------------#
+
+if (BUILD_SIGNALS)
+    ExternalProject_Add(
+            Signals
+            DOWNLOAD_COMMAND ""
+            SOURCE_DIR "${CMAKE_SOURCE_DIR}/signals"
+            CONFIGURE_COMMAND ""
+            BUILD_COMMAND ""
+            INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/signals/include ${DEPENDENCIES_OUTPUT_DIR}/include
     )
 endif ()
 
