@@ -16,6 +16,10 @@ include(WinToast)
 
 project(chatterino)
 
+IF(MSVC)
+    ADD_DEFINITIONS("/EHsc")
+ENDIF(MSVC)
+
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS LIST_DIRECTORIES false "*.hpp" "*.cpp" "*.ui" "*.qrc")
 
 generate_source_groups(${SOURCE_FILES})

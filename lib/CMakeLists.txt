@@ -84,18 +84,13 @@ endif ()
 if (BUILD_LIBCOMMUNI)
     ExternalProject_Add(
             LibCommuni
-            GIT_REPOSITORY https://github.com/communi/libcommuni.git
-            GIT_SHALLOW TRUE
-            GIT_PROGRESS TRUE
             BUILD_IN_SOURCE 1
-            # DOWNLOAD_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/libcommuni ${CMAKE_BINARY_DIR}/Source/LibCommuni
+            DOWNLOAD_COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/libcommuni ${CMAKE_BINARY_DIR}/Source/LibCommuni
+            UPDATE_COMMAND ""
+            PATCH_COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/libcommuni-patch.pro ${CMAKE_BINARY_DIR}/Source/LibCommuni/libcommuni.pro
             #SOURCE_DIR "${CMAKE_SOURCE_DIR}/libcommuni"
             CONFIGURE_COMMAND qmake
             CONFIG+=$<UPPER_CASE:$<CONFIG>>
-            CONFIG+=static
-            CONFIG+=no_tests
-            CONFIG+=no_examples
-            DEFINES+="IRC_NAMESPACE=Communi"
             IRC_INSTALL_BINS=${DEPENDENCIES_OUTPUT_DIR}/bin
             IRC_INSTALL_HEADERS=${DEPENDENCIES_OUTPUT_DIR}/include
             IRC_INSTALL_LIBS=${DEPENDENCIES_OUTPUT_DIR}/lib
