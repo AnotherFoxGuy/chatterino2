@@ -31,7 +31,7 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE CHATTERINO_GIT_HASH=\"XD\" CH
 
 target_include_directories(${PROJECT_NAME} PRIVATE . "${RapidJSON_INCLUDE_DIRS}")
 
-target_link_libraries(${PROJECT_NAME} Settings WinToast)
+target_link_libraries(${PROJECT_NAME} Settings WinToast qt5keychain)
 
 target_link_libraries(${PROJECT_NAME}
         Qt5::Gui

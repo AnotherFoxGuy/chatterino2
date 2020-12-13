@@ -1,5 +1,5 @@
 freebsd {
-    INCLUDEPATH += /usr/local/include/qt5keychain
+    INCLUDEPATH += /usr/local/include
     LIBS += -lqt5keychain
 } else {
    include(qtkeychain/qt5keychain.pri)
