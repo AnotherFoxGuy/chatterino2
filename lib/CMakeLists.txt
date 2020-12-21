@@ -90,7 +90,7 @@ if (BUILD_LIBCOMMUNI)
             GIT_REPOSITORY https://github.com/communi/libcommuni.git
             GIT_SHALLOW TRUE
             GIT_PROGRESS TRUE
-            PATCH_COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/libcommuni-patch.pro ${CMAKE_BINARY_DIR}/Source/LibCommuni/libcommuni.pro
+            #PATCH_COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/libcommuni-patch.pro ${CMAKE_BINARY_DIR}/Source/LibCommuni/libcommuni.pro
             #SOURCE_DIR "${CMAKE_SOURCE_DIR}/libcommuni"
             CONFIGURE_COMMAND qmake
             CONFIG+=$<UPPER_CASE:$<CONFIG>>

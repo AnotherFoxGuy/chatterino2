@@ -62,7 +62,7 @@ file(GLOB_RECURSE MODEL_SOURCE_FILES CONFIGURE_DEPENDS LIST_DIRECTORIES false
         )
 
 add_library(Communi_Model ${MODEL_SOURCE_FILES})
-target_include_directories(Communi_Model PUBLIC "${CMAKE_SOURCE_DIR}/lib/libcommuni/include/IrcModel/")
+target_include_directories(Communi_Model PUBLIC "${LibCommuni_INCLUDE_DIR}/IrcModel/")
 target_compile_definitions(Communi_Model PUBLIC IRC_STATIC IRC_NAMESPACE=Communi)
 #set_property(TARGET Communi_Model PROPERTY AUTOMOC ON)
 
@@ -75,7 +75,18 @@ file(GLOB_RECURSE UTIL_SOURCE_FILES CONFIGURE_DEPENDS LIST_DIRECTORIES false
         )
 
 add_library(Communi_Util ${UTIL_SOURCE_FILES})
-target_include_directories(Communi_Util PUBLIC "${CMAKE_SOURCE_DIR}/lib/libcommuni/include/IrcUtil/")
+target_include_directories(Communi_Util PUBLIC "${LibCommuni_INCLUDE_DIR}/IrcUtil/")
 target_compile_definitions(Communi_Util PUBLIC IRC_STATIC IRC_NAMESPACE=Communi)
 #set_property(TARGET Communi_Util PROPERTY AUTOMOC ON)
+
+set(LibCommuni_INCLUDE_DIRS ${LibCommuni_INCLUDE_DIR}/IrcCore/ ${LibCommuni_INCLUDE_DIR}/IrcModel/ ${LibCommuni_INCLUDE_DIR}/IrcUtil/)
+set(LibCommuni_LIBRARIES ${Communi_Core} ${Communi_Model} ${Communi_Util})
+
+add_library(LibCommuni::LibCommuni INTERFACE IMPORTED)
+set_target_properties(LibCommuni::LibCommuni PROPERTIES
+        INTERFACE_LINK_LIBRARIES "${LibCommuni_LIBRARIES}"
+        INTERFACE_INCLUDE_DIRECTORIES "${LibCommuni_INCLUDE_DIRS}"
+        )
+
+
 

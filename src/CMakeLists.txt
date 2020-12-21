@@ -4,7 +4,7 @@ find_package(Boost REQUIRED)
 find_package(OpenSSL REQUIRED)
 
 find_package(Humanize REQUIRED)
-find_package(LibCommuni REQUIRED)
+#find_package(LibCommuni REQUIRED)
 find_package(Qt5keychain REQUIRED)
 find_package(Rapidjson REQUIRED)
 find_package(Signals REQUIRED)
@@ -12,6 +12,7 @@ find_package(Serialize REQUIRED)
 find_package(Websocketpp REQUIRED)
 
 include(Settings)
+include(LibCommuni)
 include(WinToast)
 
 project(chatterino)
