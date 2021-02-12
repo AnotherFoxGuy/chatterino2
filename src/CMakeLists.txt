@@ -39,3 +39,10 @@ target_link_libraries(${PROJECT_NAME}
         )
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE PrecompiledHeader.hpp)
+
+if(MSVC)
+    add_custom_target(copy_dll 
+        COMMAND windeployqt $<TARGET_FILE:${PROJECT_NAME}> --release --no-compiler-runtime --no-translations --no-opengl-sw --dir ${RUNTIME_OUTPUT_DIRECTORY}
+        WORKING_DIRECTORY ${RUNTIME_OUTPUT_DIRECTORY}
+        )
+endif()
