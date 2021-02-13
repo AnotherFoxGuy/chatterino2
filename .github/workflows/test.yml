@@ -20,32 +20,12 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Cache Qt
-        id: cache-qt
-        uses: actions/cache@v2.1.4
-        with:
-          path: ../Qt
-          key: ${{ runner.os }}-QtCache-20201005
-
       - name: Cache conan
         uses: actions/cache@v2.1.4
         with:
           key: ${{ runner.os }}-conan-root-${{ hashFiles('**/conanfile.txt') }}
           path: ~/.conan
 
-      # LINUX
-      - name: Install p7zip (Ubuntu)
-        if: startsWith(matrix.os, 'ubuntu')
-        run: sudo apt-get update && sudo apt-get -y install p7zip-full
-
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v2
-        with:
-          aqtversion: '==1.1.1'
-          cached: ${{ steps.cache-qt.outputs.cache-hit }}
-          extra: --external 7z
-
-      # LINUX
       - name: Install dependencies (Ubuntu)
         if: startsWith(matrix.os, 'ubuntu')
         run: |
@@ -68,7 +48,9 @@ jobs:
                 libxcb-keysyms1 \
                 libxcb-render-util0 \
                 libxcb-xinerama0 \
-                libgtest-dev
+                qt5-default \
+                qtmultimedia5-dev \
+                libqt5svg5-dev
 
       - name: Create build directory (Ubuntu)
         if: startsWith(matrix.os, 'ubuntu')
@@ -81,14 +63,13 @@ jobs:
       - name: Build (Ubuntu)
         if: startsWith(matrix.os, 'ubuntu')
         run: |
-            cmake -DUSE_PACKAGE_MANAGER=ON -DBUILD_TESTS=ON -DBUILD_APP=OFF ..
+            cmake -DUSE_PACKAGE_MANAGER=ON -DBUILD_TESTS=ON -DBUILD_APP=OFF -DCMAKE_BUILD_TYPE=Release ..
             make -j
         working-directory: build-test
         shell: bash
 
       - name: Test (Ubuntu)
         if: startsWith(matrix.os, 'ubuntu')
-        run: |
-            ./chatterino-test --platform minimal
-        working-directory: build-test
+        run: ./chatterino-test --platform minimal
+        working-directory: build-test/bin
         shell: bash
