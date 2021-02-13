@@ -72,7 +72,7 @@ jobs:
       - name: Build (Ubuntu)
         if: startsWith(matrix.os, 'ubuntu')
         run: |
-            cmake -DBUILD_TESTS=On ..
+            cmake -DBUILD_TESTS=On -DBUILD_APP=Off ..
             cmake --build .
         working-directory: build-test
         shell: bash
