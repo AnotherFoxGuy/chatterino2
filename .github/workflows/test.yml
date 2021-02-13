@@ -71,7 +71,9 @@ jobs:
       - name: Test (Ubuntu)
         uses: GabrielBB/xvfb-action@v1
         if: startsWith(matrix.os, 'ubuntu')
-        run: |
-            ./chatterino-test --platform minimal
+        run: ./bin/chatterino-test --platform minimal
         working-directory: build-test
         shell: bash
+
+      - name: Clean conan pkgs
+        run: cmake -P cmake/pmm.cmake /Conan /Clean
