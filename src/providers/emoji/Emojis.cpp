@@ -222,6 +222,12 @@ void Emojis::loadEmojiSet()
             QString emojiSetToUse = emojiSet;
             // clang-format off
             static std::map<QString, QString> emojiSets = {
+                // statically 
+                {"Twitter",  "https://cdn.statically.io/gh/iamcal/emoji-data/v6.0.0/img-twitter-64/"},
+                {"Facebook", "https://cdn.statically.io/gh/iamcal/emoji-data/v6.0.0/img-facebook-64/"},
+                {"Apple",    "https://cdn.statically.io/gh/iamcal/emoji-data/v6.0.0/img-apple-64/"},
+                {"Google",   "https://cdn.statically.io/gh/iamcal/emoji-data/v6.0.0/img-google-64/"},
+
                 // JSDELIVR
                 // {"Twitter", "https://cdn.jsdelivr.net/npm/emoji-datasource-twitter@4.0.4/img/twitter/64/"},
                 // {"Facebook", "https://cdn.jsdelivr.net/npm/emoji-datasource-facebook@4.0.4/img/facebook/64/"},
@@ -230,10 +236,10 @@ void Emojis::loadEmojiSet()
                 // {"Messenger", "https://cdn.jsdelivr.net/npm/emoji-datasource-messenger@4.0.4/img/messenger/64/"},
 
                 // OBRODAI
-                {"Twitter", "https://pajbot.com/static/emoji-v2/img/twitter/64/"},
-                {"Facebook", "https://pajbot.com/static/emoji-v2/img/facebook/64/"},
-                {"Apple", "https://pajbot.com/static/emoji-v2/img/apple/64/"},
-                {"Google", "https://pajbot.com/static/emoji-v2/img/google/64/"},
+                // {"Twitter", "https://pajbot.com/static/emoji-v2/img/twitter/64/"},
+                // {"Facebook", "https://pajbot.com/static/emoji-v2/img/facebook/64/"},
+                // {"Apple", "https://pajbot.com/static/emoji-v2/img/apple/64/"},
+                // {"Google", "https://pajbot.com/static/emoji-v2/img/google/64/"},
 
                 // Cloudflare+B2 bucket
                 // {"Twitter", "https://chatterino2-emoji-cdn.pajlada.se/file/c2-emojis/emojis-v1/twitter/64/"},
