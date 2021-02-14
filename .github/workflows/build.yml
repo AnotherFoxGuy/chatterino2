@@ -102,7 +102,7 @@ jobs:
             mkdir build
             cd build
             "C:\Program Files\Conan\conan\conan.exe" install ..\conanfile-qmake.txt
-            cmake ..
+            cmake -G"NMake Makefiles" -DCMAKE_BUILD_TYPE=Release ..
             nmake
             windeployqt release/chatterino.exe --release --no-compiler-runtime --no-translations --no-opengl-sw --dir Chatterino2/
             cp release/chatterino.exe Chatterino2/
