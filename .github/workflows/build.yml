@@ -62,21 +62,20 @@ jobs:
           key: ${{ runner.os }}-conan-pkg-${{ hashFiles('**/conanfile.txt') }}
           path: C:/.conan/
 
-      - name: Install dependencies (Windows)
+      - name: Download conan
         if: startsWith(matrix.os, 'windows')
-        run: |
-            choco install conan -y
+        run: Invoke-WebRequest -Uri "https://github.com/AnotherFoxGuy/conan-onefile/releases/latest/download/conan.exe" -OutFile "C:\vcpkg\conan.exe"
 
-            refreshenv
-        shell: cmd
+      - name: Enable Developer Command Prompt
+        if: startsWith(matrix.os, 'windows')
+        uses: ilammy/msvc-dev-cmd@v1.6.0
 
       - name: Build (Windows)
         if: startsWith(matrix.os, 'windows')
         run: |
-            call "%programfiles(x86)%\Microsoft Visual Studio\2019\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
             mkdir build
             cd build
-            "C:\Program Files\Conan\conan\conan.exe" install ..
+            conan install ..
             qmake ..
             set cl=/MP
             nmake /S /NOLOGO
@@ -84,13 +83,6 @@ jobs:
             cp release/chatterino.exe Chatterino2/
             echo nightly > Chatterino2/modes
             7z a chatterino-windows-x86-64.zip Chatterino2/
-        shell: cmd
-
-      - name: Ensure build succeeded (Windows)
-        if: startsWith(matrix.os, 'windows')
-        run: |
-            cd build
-            ls release/chatterino.exe
 
       - name: Upload artifact (Windows)
         if: startsWith(matrix.os, 'windows')
