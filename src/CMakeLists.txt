@@ -480,34 +480,34 @@ endif ()
 
 # Enable autogeneration of Qts MOC/RCC/UIC
 set_target_properties(${PROJECT_NAME}
-    PROPERTIES
-    AUTOMOC ON
-    AUTORCC ON
-    AUTOUIC ON
-    )
+        PROPERTIES
+        AUTOMOC ON
+        AUTORCC ON
+        AUTOUIC ON
+        )
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE
-    CHATTERINO
-    UNICODE
-    AB_CUSTOM_THEME
-    AB_CUSTOM_SETTINGS
-    IRC_STATIC
-    IRC_NAMESPACE=Communi
-    )
+        CHATTERINO
+        UNICODE
+        AB_CUSTOM_THEME
+        AB_CUSTOM_SETTINGS
+        IRC_STATIC
+        IRC_NAMESPACE=Communi
+        )
 if (USE_SYSTEM_QT5KEYCHAIN)
     target_compile_definitions(${PROJECT_NAME} PRIVATE
-        CMAKE_BUILD
-        )
+            CMAKE_BUILD
+            )
 endif ()
 target_compile_definitions(${PROJECT_NAME} PRIVATE
-    CHATTERINO_GIT_HASH=\"${GIT_HASH}\"
-    CHATTERINO_GIT_RELEASE=\"${GIT_RELEASE}\"
-    CHATTERINO_GIT_COMMIT=\"${GIT_COMMIT}\"
-    )
+        CHATTERINO_GIT_HASH=\"${GIT_HASH}\"
+        CHATTERINO_GIT_RELEASE=\"${GIT_RELEASE}\"
+        CHATTERINO_GIT_COMMIT=\"${GIT_COMMIT}\"
+        )
 if (WIN32)
     target_compile_definitions(${PROJECT_NAME} PRIVATE
-        USEWINSDK
-        )
+            USEWINSDK
+            )
     set_target_properties(${PROJECT_NAME} PROPERTIES WIN32_EXECUTABLE TRUE)
 endif ()
 
@@ -518,15 +518,15 @@ endif ()
 if (APPLE)
     set_target_properties(${PROJECT_NAME} PROPERTIES MACOSX_BUNDLE TRUE)
     set_target_properties(${PROJECT_NAME}
-        PROPERTIES
-        MACOSX_BUNDLE_BUNDLE_NAME "Chatterino"
-        MACOSX_BUNDLE_GUI_IDENTIFIER "com.chatterino"
-        MACOSX_BUNDLE_INFO_STRING "Chat client for Twitch"
-        MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_VERSION}"
-        MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
-        MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}"
-        MACOSX_BUNDLE_ICON_FILE chatterino.icns
-        )
+            PROPERTIES
+            MACOSX_BUNDLE_BUNDLE_NAME "Chatterino"
+            MACOSX_BUNDLE_GUI_IDENTIFIER "com.chatterino"
+            MACOSX_BUNDLE_INFO_STRING "Chat client for Twitch"
+            MACOSX_BUNDLE_LONG_VERSION_STRING "${PROJECT_VERSION}"
+            MACOSX_BUNDLE_SHORT_VERSION_STRING "${PROJECT_VERSION}"
+            MACOSX_BUNDLE_BUNDLE_VERSION "${PROJECT_VERSION}"
+            MACOSX_BUNDLE_ICON_FILE chatterino.icns
+            )
 endif ()
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
@@ -544,75 +544,116 @@ target_link_libraries(${PROJECT_NAME}
 
 if (WinToast_FOUND)
     target_link_libraries(${PROJECT_NAME}
-        PRIVATE
-        WinToast)
+            PRIVATE
+            WinToast)
 endif ()
 
 if (USE_CONAN AND TARGET CONAN_PKG::boost)
     target_link_libraries(${PROJECT_NAME}
-        PRIVATE
-        CONAN_PKG::boost
-        )
+            PRIVATE
+            CONAN_PKG::boost
+            )
 else ()
     target_link_libraries(${PROJECT_NAME}
-        PRIVATE
-        Boost::boost
-        )
+            PRIVATE
+            Boost::boost
+            )
 endif ()
 
 if (USE_CONAN AND TARGET CONAN_PKG::openssl)
     target_link_libraries(${PROJECT_NAME}
-        PRIVATE
-        CONAN_PKG::openssl
-        )
+            PRIVATE
+            CONAN_PKG::openssl
+            )
 else ()
     target_link_libraries(${PROJECT_NAME}
-        PRIVATE
-        OpenSSL::SSL
-        OpenSSL::Crypto
-        )
+            PRIVATE
+            OpenSSL::SSL
+            OpenSSL::Crypto
+            )
 endif ()
 
 target_include_directories(${PROJECT_NAME} PRIVATE ${RapidJSON_INCLUDE_DIRS})
 target_link_libraries(${PROJECT_NAME}
-    PRIVATE
-    LibCommuni::LibCommuni
-    qt5keychain
-    Pajlada::Serialize
-    Pajlada::Settings
-    Pajlada::Signals
-    websocketpp::websocketpp
-    Threads::Threads
-    RapidJSON::RapidJSON
-    LRUCache
-    )
+        PRIVATE
+        LibCommuni::LibCommuni
+        qt5keychain
+        Pajlada::Serialize
+        Pajlada::Settings
+        Pajlada::Signals
+        websocketpp::websocketpp
+        Threads::Threads
+        RapidJSON::RapidJSON
+        LRUCache
+        )
 if (LIBRT)
     target_link_libraries(${PROJECT_NAME}
-        PRIVATE
-        ${LIBRT}
-        )
+            PRIVATE
+            ${LIBRT}
+            )
 endif ()
 
-set_target_properties(${PROJECT_NAME}
-    PROPERTIES
-    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
-    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
-    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin"
-    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/bin"
-    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/bin"
-    )
 
-if (MSVC)
+# ------------------------------------------------------------------------------------------------#
+# Cpack
+# ------------------------------------------------------------------------------------------------#
+
+set(CPACK_PACKAGE_NAME "Chatterino")
+set(CPACK_PACKAGE_VENDOR "Chatterino")
+set(CPACK_PACKAGE_DESCRIPTION "Chatterino is a chat client for twitch chat. It aims to be an improved/extended version of the twitch web chat")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Chatterino is a chat client for twitch chat")
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/resources/license.rtf")
+set(CPACK_PACKAGE_EXECUTABLES "chatterino" "Chatterino")
+
+set(CPACK_GENERATOR ZIP)
+
+set_target_properties(${PROJECT_NAME}
+        PROPERTIES
+        ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+        RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin"
+        RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_BINARY_DIR}/bin"
+        RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/bin"
+        )
+
+if (WIN32)
     get_target_property(Qt5_Core_Location Qt5::Core LOCATION)
     get_filename_component(QT_BIN_DIR ${Qt5_Core_Location} DIRECTORY)
     set(WINDEPLOYQT_COMMAND "${QT_BIN_DIR}/windeployqt.exe" $<TARGET_FILE:${PROJECT_NAME}> --release --no-compiler-runtime --no-translations --no-opengl-sw)
+
+    add_custom_target(copy_dll
+            COMMAND ${WINDEPLOYQT_COMAND}
+            WORKING_DIRECTORY ${RUNTIME_OUTPUT_DIRECTORY}
+            )
 
     install(TARGETS ${PROJECT_NAME}
             RUNTIME DESTINATION .
             )
 
+    install(FILES "${CMAKE_BINARY_DIR}/bin/libssl-1_1-x64.dll" "${CMAKE_BINARY_DIR}/bin/libcrypto-1_1-x64.dll" DESTINATION .)
+
     install(CODE "execute_process(COMMAND ${WINDEPLOYQT_COMMAND} --dir \${CMAKE_INSTALL_PREFIX})")
+
+    # For Windows Desktop shortcuts
+    set(CPACK_CREATE_DESKTOP_LINKS "chatterino" "Chatterino 2")
+
+    # Windows Add or Remove Program properties
+    set(CPACK_WIX_PROGRAM_MENU_FOLDER "Chatterino 2")
+    set(CPACK_WIX_PROPERTY_ARPCOMMENTS "${CPACK_PACKAGE_DESCRIPTION_SUMMARY}")
+    set(CPACK_WIX_PROPERTY_ARPURLINFOABOUT "https://chatterino.com/")
+    set(CPACK_WIX_PROPERTY_URLUPDATEINFO "https://chatterino.com/")
+
+    set(CPACK_WIX_PRODUCT_ICON "${CMAKE_SOURCE_DIR}/resources/icon.ico")
+
+    set(CPACK_WIX_LICENSE_RTF "${CPACK_RESOURCE_FILE_LICENSE}")
+    set(CPACK_WIX_UPGRADE_GUID "f33967d1-0bdd-4a4b-ba1a-d859bce8927a")
+
+    set(CPACK_PACKAGE_INSTALL_DIRECTORY "Chatterino2")
+    set(CPACK_GENERATOR ${CPACK_GENERATOR};WIX)
+    set(CPACK_MODULE_PATH "")
+
 elseif (APPLE)
     install(TARGETS ${PROJECT_NAME}
             RUNTIME DESTINATION bin
@@ -636,3 +677,5 @@ else ()
             DESTINATION share/icons/hicolor/256x256/apps
             )
 endif ()
+
+include(CPack)
