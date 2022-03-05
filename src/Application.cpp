@@ -65,6 +65,7 @@ Application::Application(Settings &_settings, Paths &_paths)
     , chatterinoBadges(&this->emplace<ChatterinoBadges>())
     , ffzBadges(&this->emplace<FfzBadges>())
     , logging(&this->emplace<Logging>())
+    , scriptEngine(&this->emplace<ScriptEngine>())
 {
     this->instance = this;
 

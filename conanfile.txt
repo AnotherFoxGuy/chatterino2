@@ -1,6 +1,7 @@
 [requires]
 openssl/1.1.1m
 boost/1.78.0
+angelscript/2.35.0
 
 [generators]
 qmake

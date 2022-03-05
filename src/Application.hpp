@@ -6,6 +6,7 @@
 #include "common/SignalVector.hpp"
 #include "common/Singleton.hpp"
 #include "singletons/NativeMessaging.hpp"
+#include "scripting/ScriptEngine.hpp"
 
 namespace chatterino {
 
@@ -61,6 +62,8 @@ public:
     TwitchIrcServer *const twitch2{};
     ChatterinoBadges *const chatterinoBadges{};
     FfzBadges *const ffzBadges{};
+
+    ScriptEngine *const scriptEngine{};
 
     /*[[deprecated]]*/ Logging *const logging{};
 

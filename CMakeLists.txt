@@ -53,6 +53,7 @@ find_package(Qt${MAJOR_QT_VERSION} REQUIRED
 
 if (WIN32)
     find_package(WinToast REQUIRED)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}        /bigobj")
 endif ()
 
 find_package(Sanitizers)
@@ -99,6 +100,8 @@ endif()
 find_package(RapidJSON REQUIRED)
 
 find_package(Websocketpp REQUIRED)
+
+find_package(angelscript)
 
 if (BUILD_TESTS)
     find_package(GTest REQUIRED)
