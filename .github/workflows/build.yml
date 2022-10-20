@@ -53,19 +53,12 @@ jobs:
           dir: "${{ github.workspace }}/qt/"
 
       # WINDOWS
-      - name: Cache conan packages part 1
+      - name: Cache conan packages
         if: startsWith(matrix.os, 'windows')
         uses: actions/cache@v3
         with:
-          key: ${{ runner.os }}-conan-user-${{ hashFiles('**/conanfile.txt') }}
+          key: ${{ runner.os }}-conan-${{ hashFiles('**/conanfile.txt') }}
           path:  ~/.conan/
-
-      - name: Cache conan packages part 2
-        if: startsWith(matrix.os, 'windows')
-        uses: actions/cache@v3
-        with:
-          key: ${{ runner.os }}-conan-root-${{ hashFiles('**/conanfile.txt') }}
-          path: C:/.conan/
 
       - name: Add Conan to path
         if: startsWith(matrix.os, 'windows')
@@ -82,6 +75,8 @@ jobs:
 
       - name: Build (Windows)
         if: startsWith(matrix.os, 'windows')
+        env:
+          CONAN_USER_HOME_SHORT: None
         run: |
             mkdir build
             cd build
