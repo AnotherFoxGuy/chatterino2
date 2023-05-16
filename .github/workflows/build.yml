@@ -127,6 +127,10 @@ jobs:
         if: startsWith(matrix.os, 'windows')
         uses: ilammy/msvc-dev-cmd@v1.12.1
 
+      - name: Run sccache-cache
+        if: startsWith(matrix.os, 'windows')
+        uses: mozilla-actions/sccache-action@v0.0.3
+
       - name: Setup conan variables (Windows)
         if: startsWith(matrix.os, 'windows')
         run: |
@@ -170,6 +174,8 @@ jobs:
 
       - name: Build (Windows)
         if: startsWith(matrix.os, 'windows')
+        env:
+          SCCACHE_GHA_ENABLED: "true"
         shell: pwsh
         run: |
           cd build
@@ -177,6 +183,8 @@ jobs:
               -G"NMake Makefiles" `
               -DCMAKE_BUILD_TYPE=RelWithDebInfo `
               -DCMAKE_TOOLCHAIN_FILE="conan_toolchain.cmake" `
+              -DCMAKE_C_COMPILER_LAUNCHER=sccache `
+              -DCMAKE_CXX_COMPILER_LAUNCHER=sccache `
               -DUSE_PRECOMPILED_HEADERS=OFF `
               -DBUILD_WITH_CRASHPAD="$Env:C2_ENABLE_CRASHPAD" `
               -DCHATTERINO_LTO="$Env:C2_ENABLE_LTO" `
