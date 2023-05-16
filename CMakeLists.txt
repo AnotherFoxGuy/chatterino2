@@ -41,12 +41,6 @@ else()
     set(MAJOR_QT_VERSION "5")
 endif()
 
-find_program(CCACHE_PROGRAM ccache)
-if (CCACHE_PROGRAM)
-    set(CMAKE_CXX_COMPILER_LAUNCHER "${CCACHE_PROGRAM}")
-    message("Using ${CCACHE_PROGRAM} for speeding up build")
-endif ()
-
 include(${CMAKE_CURRENT_LIST_DIR}/cmake/GIT.cmake)
 
 find_package(Qt${MAJOR_QT_VERSION} REQUIRED
