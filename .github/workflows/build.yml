@@ -19,6 +19,7 @@ env:
   # Last known good conan version
   # 2.0.3 has a bug on Windows (conan-io/conan#13606)
   CONAN_VERSION: 2.0.2
+  SCCACHE_GHA_ENABLED: "true"
 
 jobs:
   build:
@@ -105,6 +106,9 @@ jobs:
           submodules: recursive
           fetch-depth: 0 # allows for tags access
 
+      - name: Run sccache-cache
+        uses: mozilla-actions/sccache-action@v0.0.3
+
       - name: Install Qt5
         if: startsWith(matrix.qt-version, '5.')
         uses: jurplel/install-qt-action@v3.2.0
@@ -126,10 +130,6 @@ jobs:
       - name: Enable Developer Command Prompt (Windows)
         if: startsWith(matrix.os, 'windows')
         uses: ilammy/msvc-dev-cmd@v1.12.1
-
-      - name: Run sccache-cache
-        if: startsWith(matrix.os, 'windows')
-        uses: mozilla-actions/sccache-action@v0.0.3
 
       - name: Setup conan variables (Windows)
         if: startsWith(matrix.os, 'windows')
@@ -174,8 +174,6 @@ jobs:
 
       - name: Build (Windows)
         if: startsWith(matrix.os, 'windows')
-        env:
-          SCCACHE_GHA_ENABLED: "true"
         shell: pwsh
         run: |
           cd build
@@ -272,6 +270,8 @@ jobs:
           CXXFLAGS=-fno-sized-deallocation cmake \
             -DCMAKE_INSTALL_PREFIX=appdir/usr/ \
             -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_C_COMPILER_LAUNCHER=sccache \
+            -DCMAKE_CXX_COMPILER_LAUNCHER=sccache \
             -DPAJLADA_SETTINGS_USE_BOOST_FILESYSTEM=On \
             -DUSE_PRECOMPILED_HEADERS=OFF \
             -DCMAKE_EXPORT_COMPILE_COMMANDS=On \
@@ -337,6 +337,8 @@ jobs:
           cd build
           cmake \
               -DCMAKE_BUILD_TYPE=Release \
+              -DCMAKE_C_COMPILER_LAUNCHER=sccache \
+              -DCMAKE_CXX_COMPILER_LAUNCHER=sccache \
               -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 \
               -DOPENSSL_ROOT_DIR=/usr/local/opt/openssl \
               -DUSE_PRECOMPILED_HEADERS=OFF \
